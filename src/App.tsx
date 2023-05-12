@@ -1,3 +1,4 @@
+import { Task } from './components/Task';
 import { Search } from './components/Search';
 
 import logo from './assets/logo.svg';
@@ -23,7 +24,8 @@ function App() {
             </p>
           </div>
           <ul className={styles.toDoList}>
-            <li>sd</li>
+            <Task />
+            <Task />
           </ul>
         </div>
       </main>
