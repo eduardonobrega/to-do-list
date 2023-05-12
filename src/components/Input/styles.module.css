@@ -1,0 +1,19 @@
+.input {
+  background-color: var(--gray-500);
+  font-size: 1.6rem;
+
+  width: 100% ;
+  padding: 1.6rem;
+  border-radius: 8px;
+
+  border: none;
+  outline: none;
+}
+
+.input:focus {
+  outline: 1px solid var(--purple-dark);
+}
+
+.input::placeholder {
+  color: var(--gray-300);
+}
