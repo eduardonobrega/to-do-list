@@ -1,3 +1,13 @@
-.app {
-  color: red
+.wrapper {
+  min-height: 100vh;
+  background-color: var(--gray-600);
+}
+
+.header {
+  background-color: var(--gray-700);
+
+  height: 20rem;
+
+  display: grid;
+  place-items: center;
 }
