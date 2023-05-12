@@ -11,9 +11,22 @@ function App() {
         <img src={logo} alt="Logo do todo" />
       </header>
       <main>
-        <Search/>
-      </main>
+        <Search />
 
+        <div className={styles.tasks}>
+          <div className={styles.tasksInfo}>
+            <p>
+              Tarefas criadas<span>5</span>
+            </p>
+            <p>
+              Concluídas<span>2 de 5</span>
+            </p>
+          </div>
+          <ul className={styles.toDoList}>
+            <li>sd</li>
+          </ul>
+        </div>
+      </main>
     </div>
   );
 }
