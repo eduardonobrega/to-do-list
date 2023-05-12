@@ -1,0 +1,29 @@
+.button {
+  color: var(--gray-300);
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+
+  width: 2.4rem;
+  height: 2.4rem;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border-radius: 4px;
+}
+
+.button svg {
+  width: 1.9rem;
+  height: 1.9rem;
+}
+
+.button:hover,
+.button:focus {
+  color: var(--danger);
+  background-color: var(--gray-400);
+  box-shadow: none;
+}
+
+
