@@ -1,6 +1,7 @@
 .wrapper {
   min-height: 100vh;
   background-color: var(--gray-600);
+  padding-bottom: 2.4rem;
 }
 
 .header {
@@ -35,17 +36,17 @@
   line-height: 1.7rem;
 }
 
-.tasks .tasksInfo > p span{
+.tasks .tasksInfo > p span {
   background-color: var(--gray-500);
   color: var(--gray-200);
 
   font-size: 1.2rem;
   line-height: 1.5rem;
-  
+
   display: inline-block;
-  padding: .2rem .8rem;
+  padding: 0.2rem 0.8rem;
   border-radius: 99.9rem;
-  margin-left: .8rem;
+  margin-left: 0.8rem;
 }
 
 .tasks .toDoList {

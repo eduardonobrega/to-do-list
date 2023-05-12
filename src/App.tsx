@@ -26,6 +26,7 @@ function App() {
           <ul className={styles.toDoList}>
             <Task />
             <Task />
+            <Task />
           </ul>
         </div>
       </main>
