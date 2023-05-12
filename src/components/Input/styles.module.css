@@ -9,10 +9,6 @@
   outline: none;
 }
 
-.input:focus {
-  outline: 1px solid var(--purple-dark);
-}
-
 .input::placeholder {
   color: var(--gray-300);
 }

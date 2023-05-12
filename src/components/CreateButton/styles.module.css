@@ -18,8 +18,10 @@
   transition: background-color 200ms;
 }
 
-.button:hover {
-  background-color: var(--blue);
+.button:hover,
+.button:focus {
+  background-color: var(--blue);  
+  box-shadow: none;
 }
 
 .button svg{
