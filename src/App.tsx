@@ -1,8 +1,8 @@
-import logo from './assets/logo.svg';
+import { Search } from './components/Search';
 
+import logo from './assets/logo.svg';
 import styles from './App.module.css';
 import './global.css';
-import { CreateButton } from './components/CreateButton';
 
 function App() {
   return (
@@ -10,7 +10,10 @@ function App() {
       <header className={styles.header}>
         <img src={logo} alt="Logo do todo" />
       </header>
-      <CreateButton />
+      <main>
+        <Search/>
+      </main>
+
     </div>
   );
 }
