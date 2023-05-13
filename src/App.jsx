@@ -1,5 +1,6 @@
 import { Task } from './components/Task';
 import { Search } from './components/Search';
+import { ClipboardText } from '@phosphor-icons/react';
 
 import logo from './assets/logo.svg';
 import styles from './App.module.css';
@@ -28,6 +29,14 @@ function App() {
             <Task />
             <Task />
           </ul>
+          <div className={styles.empty}>
+            <ClipboardText />
+            <p>
+              <strong>Você ainda não tem tarefas cadastradas</strong>
+              <br />
+              Crie tarefas e organize seus itens a fazer
+            </p>
+          </div>
         </div>
       </main>
     </div>
