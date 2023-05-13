@@ -25,8 +25,7 @@ function App() {
   }
 
   function addNewTask() {
-    console.log();
-    const isNewTask = !toDoList.some((task) => task.content === newTask);
+    const isNewTask = !toDoList.some((task) => task.content === newTask.trim());
     if (isNewTask) {
       setTodoList((prevState) => [
         { content: newTask, completed: false },
@@ -36,6 +35,22 @@ function App() {
       alert('Tarefa já na lista');
     }
     setNewTask('');
+  }
+
+  function changeTaskStatus(taskChanged) {
+    const newArray = toDoList.map((task) => {
+      if (task.content === taskChanged.content) {
+        return {
+          content: taskChanged.content,
+          completed: !taskChanged.completed,
+        };
+      }
+      return task;
+    });
+    const taskCompleted = newArray.filter((task) => task.completed);
+    const pendingTask = newArray.filter((task) => !task.completed);
+
+    setTodoList([...pendingTask, ...taskCompleted]);
   }
 
   return (
@@ -62,7 +77,7 @@ function App() {
             ) : (
               <p>
                 Concluídas
-                <span>
+                <span style={{ minWidth: '5.3rem' }}>
                   {amountOfCompletedTasks} de {amountOfTasks}
                 </span>
               </p>
@@ -74,6 +89,7 @@ function App() {
                 key={task.content}
                 task={task}
                 onDeleteTask={deleteTask}
+                onChangeTaskStatus={changeTaskStatus}
               />
             ))}
           </ul>

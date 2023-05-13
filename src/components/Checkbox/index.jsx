@@ -1,8 +1,17 @@
 import styles from './styles.module.css';
 
+export function Checkbox({ task, onChangeTaskStatus }) {
+  function handleChangeTaskStatus() {
+    onChangeTaskStatus(task);
+  }
 
-export function Checkbox() {
   return (
-    <input type="checkbox" name="" id="" className={styles.checkbox}/>
+    <input
+      type="checkbox"
+      name=""
+      id=""
+      className={styles.checkbox}
+      onChange={handleChangeTaskStatus}
+    />
   );
 }
