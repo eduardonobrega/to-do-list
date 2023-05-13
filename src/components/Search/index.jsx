@@ -4,13 +4,13 @@ import { Input } from '../Input';
 
 import styles from './styles.module.css';
 
-export function Search({ newTask, onNewTaskChange, addNewTask }) {
+export function Search({ newTask, onNewTaskChange, onAddNewTask }) {
   const inputRef = useRef(null);
 
   function handleAddNewTask(event) {
     event.preventDefault();
     inputRef.current.focus();
-    addNewTask();
+    onAddNewTask();
   }
 
   function setInputChildRef(ref) {

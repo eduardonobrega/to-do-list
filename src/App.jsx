@@ -9,15 +9,29 @@ import './global.css';
 
 function App() {
   const [toDoList, setTodoList] = useState([
-    'Lavar a casa',
-    'Ir para a academia',
+    { content: 'Lavar a casa', completed: false },
   ]);
   const [newTask, setNewTask] = useState('');
 
+  const amountOfTasks = toDoList.length;
+  const amountOfCompletedTasks = toDoList.filter(
+    (task) => task.completed
+  ).length;
+
+  function deleteTask(taskDeleted) {
+    setTodoList((prevState) =>
+      prevState.filter((task) => task.content !== taskDeleted)
+    );
+  }
+
   function addNewTask() {
-    const isNewTask = !toDoList.includes(newTask);
+    console.log();
+    const isNewTask = !toDoList.some((task) => task.content === newTask);
     if (isNewTask) {
-      setTodoList((prevState) => [newTask, ...prevState]);
+      setTodoList((prevState) => [
+        { content: newTask, completed: false },
+        ...prevState,
+      ]);
     } else {
       alert('Tarefa já na lista');
     }
@@ -33,21 +47,34 @@ function App() {
         <Search
           newTask={newTask}
           onNewTaskChange={setNewTask}
-          addNewTask={addNewTask}
+          onAddNewTask={addNewTask}
         />
 
         <div className={styles.tasks}>
           <div className={styles.tasksInfo}>
             <p>
-              Tarefas criadas<span>5</span>
+              Tarefas criadas<span>{amountOfTasks}</span>
             </p>
-            <p>
-              Concluídas<span>2 de 5</span>
-            </p>
+            {amountOfTasks === 0 ? (
+              <p>
+                Concluídas<span>0</span>
+              </p>
+            ) : (
+              <p>
+                Concluídas
+                <span>
+                  {amountOfCompletedTasks} de {amountOfTasks}
+                </span>
+              </p>
+            )}
           </div>
           <ul className={styles.toDoList}>
             {toDoList.map((task) => (
-              <Task key={task} taskText={task} />
+              <Task
+                key={task.content}
+                task={task}
+                onDeleteTask={deleteTask}
+              />
             ))}
           </ul>
           <div className={styles.empty}>

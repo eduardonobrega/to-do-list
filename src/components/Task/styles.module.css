@@ -11,6 +11,8 @@
   justify-content: space-between;
   align-items: flex-start;
   gap: 1.2rem;
+
+  transition: 200ms ease;
 }
 
 .task + .task {
