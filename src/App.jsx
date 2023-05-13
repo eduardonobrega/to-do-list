@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Task } from './components/Task';
 import { Search } from './components/Search';
 import { ClipboardText } from '@phosphor-icons/react';
@@ -8,9 +8,7 @@ import styles from './App.module.css';
 import './global.css';
 
 function App() {
-  const [toDoList, setTodoList] = useState([
-    { content: 'Lavar a casa', completed: false },
-  ]);
+  const [toDoList, setTodoList] = useState([]);
   const [newTask, setNewTask] = useState('');
 
   const amountOfTasks = toDoList.length;
@@ -19,18 +17,29 @@ function App() {
   ).length;
 
   function deleteTask(taskDeleted) {
-    setTodoList((prevState) =>
-      prevState.filter((task) => task.content !== taskDeleted)
-    );
+    setTodoList((prevState) => {
+      const updatedList = prevState.filter(
+        (task) => task.content !== taskDeleted
+      );
+
+      localStorage.setItem('@todoList:tasks', JSON.stringify(updatedList));
+
+      return updatedList;
+    });
   }
 
   function addNewTask() {
     const isNewTask = !toDoList.some((task) => task.content === newTask.trim());
     if (isNewTask) {
-      setTodoList((prevState) => [
-        { content: newTask, completed: false },
-        ...prevState,
-      ]);
+      setTodoList((prevState) => {
+        const updatedList = [
+          { content: newTask, completed: false },
+          ...prevState,
+        ];
+
+        localStorage.setItem('@todoList:tasks', JSON.stringify(updatedList));
+        return updatedList;
+      });
     } else {
       alert('Tarefa já na lista');
     }
@@ -49,9 +58,18 @@ function App() {
     });
     const taskCompleted = newArray.filter((task) => task.completed);
     const pendingTask = newArray.filter((task) => !task.completed);
-
-    setTodoList([...pendingTask, ...taskCompleted]);
+    const updatedList = [...pendingTask, ...taskCompleted];
+    localStorage.setItem('@todoList:tasks', JSON.stringify(updatedList));
+    setTodoList(updatedList);
   }
+
+  useEffect(() => {
+    const list = localStorage.getItem('@todoList:tasks');
+
+    if (list) {
+      setTodoList(JSON.parse(list));
+    }
+  }, []);
 
   return (
     <div className={styles.wrapper}>
