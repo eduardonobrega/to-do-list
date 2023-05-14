@@ -1,14 +1,20 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, InvalidEvent, ChangeEvent, RefObject } from 'react';
 import styles from './styles.module.css';
 
-export function Input({ newTask, onNewTaskChange, setRef }) {
+interface InputProps {
+  newTask: string;
+  onNewTaskChange: (newTask: string) => void;
+  setRef: (ref: RefObject<HTMLInputElement>) => void;
+}
+
+export function Input({ newTask, onNewTaskChange, setRef }: InputProps) {
   const inputRef = useRef(null);
 
-  function handleNewTaskInvalid(event) {
+  function handleNewTaskInvalid(event: InvalidEvent<HTMLInputElement>) {
     event.target.setCustomValidity('Informe uma tarefa!');
   }
 
-  function handleNewTaskChange(event) {
+  function handleNewTaskChange(event: ChangeEvent<HTMLInputElement>) {
     event.target.setCustomValidity('');
     onNewTaskChange(event.target.value);
   }

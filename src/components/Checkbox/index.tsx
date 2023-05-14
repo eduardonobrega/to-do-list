@@ -1,25 +1,29 @@
 import { useEffect, useRef } from 'react';
 import styles from './styles.module.css';
 
-export function Checkbox({ task, onChangeTaskStatus }) {
-  const checkbox = useRef(null);
+import { TaskType } from '../Task';
+
+interface CheckboxProps {
+  task: TaskType;
+  onChangeTaskStatus: (task: TaskType) => void;
+}
+
+export function Checkbox({ task, onChangeTaskStatus }: CheckboxProps) {
+  const checkbox = useRef<HTMLInputElement>(null);
+
   function handleChangeTaskStatus() {
     onChangeTaskStatus(task);
   }
 
   useEffect(() => {
-    if (task.completed) {
-      checkbox.current.checked = true;
-    } else {
-      checkbox.current.checked = false;
+    if (checkbox.current) {
+      checkbox.current.checked = task.completed;
     }
   }, []);
-  
+
   return (
     <input
       type="checkbox"
-      name=""
-      id=""
       ref={checkbox}
       className={styles.checkbox}
       onChange={handleChangeTaskStatus}

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Task } from './components/Task';
+import { Task, TaskType } from './components/Task';
 import { Search } from './components/Search';
 import { ClipboardText } from '@phosphor-icons/react';
 
@@ -8,15 +8,15 @@ import styles from './App.module.css';
 import './global.css';
 
 function App() {
-  const [toDoList, setTodoList] = useState([]);
-  const [newTask, setNewTask] = useState('');
+  const [toDoList, setTodoList] = useState<TaskType[]>([]);
+  const [newTask, setNewTask] = useState<string>('');
 
   const amountOfTasks = toDoList.length;
   const amountOfCompletedTasks = toDoList.filter(
     (task) => task.completed
   ).length;
 
-  function deleteTask(taskDeleted) {
+  function deleteTask(taskDeleted: string) {
     setTodoList((prevState) => {
       const updatedList = prevState.filter(
         (task) => task.content !== taskDeleted
@@ -46,7 +46,7 @@ function App() {
     setNewTask('');
   }
 
-  function changeTaskStatus(taskChanged) {
+  function changeTaskStatus(taskChanged: TaskType) {
     const newArray = toDoList.map((task) => {
       if (task.content === taskChanged.content) {
         return {

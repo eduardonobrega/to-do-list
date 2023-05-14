@@ -2,9 +2,14 @@ import styles from './styles.module.css';
 
 import { Trash } from '@phosphor-icons/react';
 
-export function DeleteButton({ taskText, onDeleteTask }) {
+interface DeleteButtonProps {
+  taskText: string;
+  onDeleteTask: (task: string) => void;
+}
+
+export function DeleteButton({ taskText, onDeleteTask }: DeleteButtonProps) {
   function handleDeleteTask() {
-    onDeleteTask(taskText)
+    onDeleteTask(taskText);
   }
 
   return (
