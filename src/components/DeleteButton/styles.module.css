@@ -13,7 +13,6 @@
 
   border-radius: 4px;
   flex-shrink: 0;
-
 }
 
 .button svg {
@@ -25,7 +24,4 @@
 .button:focus {
   color: var(--danger);
   background-color: var(--gray-400);
-  box-shadow: none;
 }
-
-

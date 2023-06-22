@@ -1,24 +1,30 @@
-import { Checkbox } from '../Checkbox';
-import { DeleteButton } from '../DeleteButton';
-import styles from './styles.module.css';
+import { Checkbox } from '../Checkbox'
+import { DeleteButton } from '../DeleteButton'
+import styles from './styles.module.css'
 
 export interface TaskType {
-  content: string;
-  completed: boolean;
+  content: string
+  completed: boolean
 }
 
 interface TaskProps {
-  task: TaskType;
-  onDeleteTask: (task: string) => void;
-  onChangeTaskStatus: (task: TaskType) => void;
+  task: TaskType
+  onDeleteTask: (taskDeleted: string) => void
+  onChangeTaskStatus: (taskChanged: string) => void
 }
 
-export function Task({ task, onDeleteTask, onChangeTaskStatus }: TaskProps) {
+export function Task({ task, onChangeTaskStatus, onDeleteTask }: TaskProps) {
+  function handleChangeTaskStatus() {
+    onChangeTaskStatus(task.content)
+  }
+  function handleDeleteTask() {
+    onDeleteTask(task.content)
+  }
   return (
     <li className={styles.task}>
-      <Checkbox task={task} onChangeTaskStatus={onChangeTaskStatus} />
+      <Checkbox checked={task.completed} onChange={handleChangeTaskStatus} />
       <p>{task.content}</p>
-      <DeleteButton taskText={task.content} onDeleteTask={onDeleteTask} />
+      <DeleteButton onClick={handleDeleteTask} />
     </li>
-  );
+  )
 }

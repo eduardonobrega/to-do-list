@@ -1,39 +1,38 @@
-import { useEffect, useRef, InvalidEvent, ChangeEvent, RefObject } from 'react';
-import styles from './styles.module.css';
+import styles from './styles.module.css'
+import { forwardRef, ChangeEvent, InvalidEvent, ForwardedRef } from 'react'
 
 interface InputProps {
-  newTask: string;
-  onNewTaskChange: (newTask: string) => void;
-  setRef: (ref: RefObject<HTMLInputElement>) => void;
+  onNewTaskChange: (newTask: string) => void
+  newTask: string
 }
 
-export function Input({ newTask, onNewTaskChange, setRef }: InputProps) {
-  const inputRef = useRef(null);
+export const Input = forwardRef(
+  (
+    { onNewTaskChange, newTask }: InputProps,
+    ref: ForwardedRef<HTMLInputElement>,
+  ) => {
+    function handleNewTaskInvalid(event: InvalidEvent<HTMLInputElement>) {
+      event.target.setCustomValidity('Informe uma tarefa!')
+    }
 
-  function handleNewTaskInvalid(event: InvalidEvent<HTMLInputElement>) {
-    event.target.setCustomValidity('Informe uma tarefa!');
-  }
+    function handleNewTaskChange(event: ChangeEvent<HTMLInputElement>) {
+      event.target.setCustomValidity('')
+      onNewTaskChange(event.target.value)
+    }
 
-  function handleNewTaskChange(event: ChangeEvent<HTMLInputElement>) {
-    event.target.setCustomValidity('');
-    onNewTaskChange(event.target.value);
-  }
-
-  useEffect(() => {
-    setRef(inputRef);
-  }, [setRef]);
-
-  return (
-    <input
-      type="text"
-      placeholder="Adicione uma nova tarefa"
-      value={newTask}
-      onChange={handleNewTaskChange}
-      onInvalid={handleNewTaskInvalid}
-      className={styles.input}
-      ref={inputRef}
-      required
-      autoFocus
-    />
-  );
-}
+    return (
+      <input
+        type="text"
+        placeholder="Adicione uma nova tarefa"
+        value={newTask}
+        className={styles.input}
+        onChange={handleNewTaskChange}
+        onInvalid={handleNewTaskInvalid}
+        ref={ref}
+        required
+        autoFocus
+      />
+    )
+  },
+)
+Input.displayName = 'Input'

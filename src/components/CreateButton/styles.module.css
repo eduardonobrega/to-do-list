@@ -3,28 +3,22 @@
   font-size: 1.4rem;
   font-weight: 700;
 
-  padding: 1.6rem;
   border-radius: 8px;
+  padding: 1.6rem;
   border: none;
+  cursor: pointer;
 
   display: flex;
-  align-items: center;
   gap: 0.8rem;
-
-  cursor: pointer;
-  text-transform: uppercase;
-  letter-spacing: .1rem;
-
-  transition: background-color 200ms;
+  align-items: center;
 }
 
 .button:hover,
 .button:focus {
-  background-color: var(--blue);  
-  box-shadow: none;
+  background-color: var(--blue);
 }
 
-.button svg{
+.button > svg {
   flex-shrink: 0;
   width: 2.2rem;
   height: 2.2rem;
@@ -35,4 +29,3 @@
     display: none;
   }
 }
-

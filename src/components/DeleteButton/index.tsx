@@ -1,20 +1,11 @@
-import styles from './styles.module.css';
+import { Trash } from '@phosphor-icons/react'
 
-import { Trash } from '@phosphor-icons/react';
+import styles from './styles.module.css'
 
-interface DeleteButtonProps {
-  taskText: string;
-  onDeleteTask: (task: string) => void;
-}
-
-export function DeleteButton({ taskText, onDeleteTask }: DeleteButtonProps) {
-  function handleDeleteTask() {
-    onDeleteTask(taskText);
-  }
-
+export function DeleteButton({ ...props }) {
   return (
-    <button className={styles.button} onClick={handleDeleteTask}>
+    <button className={styles.button} {...props}>
       <Trash weight="bold" />
     </button>
-  );
+  )
 }

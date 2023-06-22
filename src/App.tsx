@@ -1,128 +1,126 @@
-import { useEffect, useState } from 'react';
-import { Task, TaskType } from './components/Task';
-import { Search } from './components/Search';
-import { ClipboardText } from '@phosphor-icons/react';
+import { ClipboardText } from '@phosphor-icons/react'
+import styles from './App.module.css'
+import igniteLogo from './assets/logo.svg'
 
-import logo from './assets/logo.svg';
-import styles from './App.module.css';
-import './global.css';
+import { Search } from './components/Search'
+import { Task, TaskType } from './components/Task'
 
-function App() {
-  const [toDoList, setTodoList] = useState<TaskType[]>([]);
-  const [newTask, setNewTask] = useState<string>('');
+import './global.css'
+import { useState, useEffect } from 'react'
 
-  const amountOfTasks = toDoList.length;
+export function App() {
+  const [toDoList, setToDoList] = useState<TaskType[]>([])
+
+  const amountOfTasks = toDoList.length
+  const noTask = amountOfTasks === 0
   const amountOfCompletedTasks = toDoList.filter(
-    (task) => task.completed
-  ).length;
+    (task) => task.completed,
+  ).length
 
-  function deleteTask(taskDeleted: string) {
-    setTodoList((prevState) => {
-      const updatedList = prevState.filter(
-        (task) => task.content !== taskDeleted
-      );
-
-      localStorage.setItem('@todoList:tasks', JSON.stringify(updatedList));
-
-      return updatedList;
-    });
-  }
-
-  function addNewTask() {
-    const isNewTask = !toDoList.some((task) => task.content === newTask.trim());
+  function addNewTask(newTask: string) {
+    const isNewTask = !toDoList.some((task) => task.content === newTask.trim())
     if (isNewTask) {
-      setTodoList((prevState) => {
+      setToDoList((prevState) => {
         const updatedList = [
           { content: newTask, completed: false },
           ...prevState,
-        ];
+        ]
 
-        localStorage.setItem('@todoList:tasks', JSON.stringify(updatedList));
-        return updatedList;
-      });
+        localStorage.setItem('@todoList:tasks', JSON.stringify(updatedList))
+        return updatedList
+      })
     } else {
-      alert('Tarefa já na lista');
+      alert('Tarefa já na lista')
     }
-    setNewTask('');
   }
 
-  function changeTaskStatus(taskChanged: TaskType) {
+  function deleteTask(taskDeleted: string) {
+    setToDoList((prevState) => {
+      const updatedList = prevState.filter(
+        (task) => task.content !== taskDeleted,
+      )
+
+      localStorage.setItem('@todoList:tasks', JSON.stringify(updatedList))
+
+      return updatedList
+    })
+  }
+
+  function changeTaskStatus(taskChanged: string) {
     const newArray = toDoList.map((task) => {
-      if (task.content === taskChanged.content) {
+      if (task.content === taskChanged) {
         return {
-          content: taskChanged.content,
-          completed: !taskChanged.completed,
-        };
+          content: taskChanged,
+          completed: !task.completed,
+        }
       }
-      return task;
-    });
-    const taskCompleted = newArray.filter((task) => task.completed);
-    const pendingTask = newArray.filter((task) => !task.completed);
-    const updatedList = [...pendingTask, ...taskCompleted];
-    localStorage.setItem('@todoList:tasks', JSON.stringify(updatedList));
-    setTodoList(updatedList);
+      return task
+    })
+    let updatedList
+    const AllTasksComplete = newArray.length === amountOfCompletedTasks
+
+    if (AllTasksComplete) {
+      updatedList = newArray
+    } else {
+      const taskCompleted = newArray.filter((task) => task.completed)
+      const pendingTask = newArray.filter((task) => !task.completed)
+      updatedList = [...pendingTask, ...taskCompleted]
+    }
+
+    localStorage.setItem('@todoList:tasks', JSON.stringify(updatedList))
+    setToDoList(updatedList)
   }
 
   useEffect(() => {
-    const list = localStorage.getItem('@todoList:tasks');
+    const list = localStorage.getItem('@todoList:tasks')
 
     if (list) {
-      setTodoList(JSON.parse(list));
+      setToDoList(JSON.parse(list))
     }
-  }, []);
+  }, [])
 
   return (
     <div className={styles.wrapper}>
       <header className={styles.header}>
-        <img src={logo} alt="Logo do todo" />
+        <img src={igniteLogo} alt="" />
       </header>
       <main>
-        <Search
-          newTask={newTask}
-          onNewTaskChange={setNewTask}
-          onAddNewTask={addNewTask}
-        />
-
+        <Search onAddNewTask={addNewTask} />
         <div className={styles.tasks}>
           <div className={styles.tasksInfo}>
             <p>
               Tarefas criadas<span>{amountOfTasks}</span>
             </p>
-            {amountOfTasks === 0 ? (
-              <p>
-                Concluídas<span>0</span>
-              </p>
-            ) : (
-              <p>
-                Concluídas
-                <span style={{ minWidth: '5.3rem' }}>
-                  {amountOfCompletedTasks} de {amountOfTasks}
-                </span>
-              </p>
-            )}
+
+            <p>
+              Concluídas
+              <span style={{ minWidth: '5.3rem' }}>
+                {amountOfCompletedTasks} de {amountOfTasks}
+              </span>
+            </p>
           </div>
           <ul className={styles.toDoList}>
             {toDoList.map((task) => (
               <Task
                 key={task.content}
                 task={task}
-                onDeleteTask={deleteTask}
                 onChangeTaskStatus={changeTaskStatus}
+                onDeleteTask={deleteTask}
               />
             ))}
           </ul>
-          <div className={styles.empty}>
-            <ClipboardText />
-            <p>
-              <strong>Você ainda não tem tarefas cadastradas</strong>
-              <br />
-              Crie tarefas e organize seus itens a fazer
-            </p>
-          </div>
+          {noTask && (
+            <div className={styles.empty}>
+              <ClipboardText />
+              <p>
+                <strong>Você ainda não tem tarefas cadastradas</strong>
+                <br />
+                Crie tarefas e organize seus itens a fazer
+              </p>
+            </div>
+          )}
         </div>
       </main>
     </div>
-  );
+  )
 }
-
-export default App;

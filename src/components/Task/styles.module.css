@@ -19,11 +19,12 @@
   margin-top: 1.6rem;
 }
 
-.task:has( input[type=checkbox]:checked) {
+.task:has(input[type="checkbox"]:checked) {
   border-color: var(--gray-500);
   box-shadow: none;
 }
-.task:has( input[type=checkbox]:checked) > p {
+
+.task:has(input[type="checkbox"]:checked) > p {
   text-decoration: line-through;
   color: var(--gray-300);
 }

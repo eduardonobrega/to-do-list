@@ -1,42 +1,31 @@
-import { useRef, FormEvent, RefObject } from 'react';
-import { CreateButton } from '../CreateButton';
-import { Input } from '../Input';
+import { useState, useRef, FormEvent } from 'react'
 
-import styles from './styles.module.css';
+import { CreateButton } from '../CreateButton'
+import { Input } from '../Input'
+import styles from './styles.module.css'
 
 interface SearchProps {
-  newTask: string;
-  onNewTaskChange: (newTask: string) => void;
-  onAddNewTask: () => void;
+  onAddNewTask: (newTask: string) => void
 }
 
-export function Search({
-  newTask,
-  onNewTaskChange,
-  onAddNewTask,
-}: SearchProps) {
-  const inputRef = useRef<HTMLInputElement | null>(null);
+export function Search({ onAddNewTask }: SearchProps) {
+  const [newTask, setNewTask] = useState('')
+  const inputRef = useRef<HTMLInputElement | null>(null)
 
   function handleAddNewTask(event: FormEvent) {
-    event.preventDefault();
+    event.preventDefault()
     if (inputRef.current) {
-      inputRef.current.focus();
+      inputRef.current.focus()
     }
-    onAddNewTask();
-  }
 
-  function setInputChildRef(ref: RefObject<HTMLInputElement>) {
-    inputRef.current = ref.current;
+    setNewTask('')
+    onAddNewTask(newTask)
   }
 
   return (
     <form className={styles.search} onSubmit={handleAddNewTask}>
-      <Input
-        newTask={newTask}
-        onNewTaskChange={onNewTaskChange}
-        setRef={setInputChildRef}
-      />
+      <Input onNewTaskChange={setNewTask} newTask={newTask} ref={inputRef} />
       <CreateButton />
     </form>
-  );
+  )
 }
